@@ -4,18 +4,18 @@
 class ArbolBPlus{
 
 public:
-    ArbolBPlus(int orden);
+    ArbolBPlus(int grado = 5);
     ~ArbolBPlus();
-    ArbolBPlus(const ArbolBPlus & a);
-    ArbolBPlus& operator=(const ArbolBPlus &a);
+    ArbolBPlus(const ArbolBPlus & arbol);
+    ArbolBPlus& operator=(const ArbolBPlus &arbol);
 
     void Agregar(int dato);
 
     void Eliminar(int dato);
 
-    bool Buscar(int dato);
+    void Vaciar();
 
-    void Imprimir();
+    bool Buscar(int dato);
 
 private:
     int numNodos;
@@ -23,23 +23,16 @@ private:
 
     struct Nodo{
         int numDatos;
-        int *datos;//grado-1
-        Nodo *hijos;//grado
+        int *datos;//orden-1
+        Nodo *hijos;//orden
         Nodo *siguienteHoja;
 
         Nodo(Nodo *hijos = nullptr);
         bool EsHoja();
     }*raiz;
-    void Agregar(T nom,Nodo * &subRaiz);//referencia a puntero a nodo
-    void Eliminar(const T &datos, Nodo *& subRaiz);
-    void MeterNodo();
-    void DividirNodo();
 
-    bool Empujar()//Si el nodo esta lleno, determina si hay espacio en la hoja.
-
-
-    Nodo* Buscar();
-    Nodo* Buscar(Nodo);
+    void Agregar(int dato,Nodo * &subRaiz);//referencia a puntero a nodo
+    void Eliminar(const int &nom, Nodo *& subRaiz);
 
 };
 
