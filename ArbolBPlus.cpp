@@ -1,6 +1,6 @@
-#include "ArbolB+.hpp"
+#include "ArbolBPlus.hpp"
 
-ArbolBPlus::ArbolBPlus(int orden /**< = 5 */) : orden(orden),numNodos(0),raiz(nullptr)
+ArbolBPlus::ArbolBPlus(int orden /**< = 5 */) : numNodos(0), orden(orden),raiz(nullptr)
 {
 }
 
@@ -8,7 +8,7 @@ ArbolBPlus::ArbolBPlus(int orden /**< = 5 */) : orden(orden),numNodos(0),raiz(nu
 
 ArbolBPlus::~ArbolBPlus()
 {
-    if(!EstaVacio()) Vaciar();
+    if(!EstaVacio() ) Vaciar();
 }
 
 //***********************************************************************************************************************************
@@ -20,32 +20,44 @@ ArbolBPlus::ArbolBPlus(const ArbolBPlus & arbol) : raiz(nullptr)
 
 //***********************************************************************************************************************************
 
-//ArbolBPlus& operator=(const ArbolBPlus &arbol)
-//{
-//
-//}
+ArbolBPlus & ArbolBPlus::operator=(const ArbolBPlus &arbol)
+{
+}
 
 //***********************************************************************************************************************************
 
-void Agregar(int dato)
+void ArbolBPlus::Agregar(int dato)
 {
     Agregar(dato,raiz);
 }
 
 //***********************************************************************************************************************************
 
-void Eliminar(int dato)
+void ArbolBPlus::Eliminar(int dato)
 {
 
 }
 
 //***********************************************************************************************************************************
 
-bool Buscar(int dato)
+void ArbolBPlus::Vaciar()
 {
 
 }
 
+//***********************************************************************************************************************************
+
+bool ArbolBPlus::Buscar(int dato)
+{
+ return true;
+}
+
+//***********************************************************************************************************************************
+
+bool ArbolBPlus::EstaVacio()
+{
+    return numNodos == 0;
+}
 
 //---------------------------------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -60,13 +72,30 @@ void ArbolBPlus::Agregar(int dato,Nodo * &subRaiz)
 {
     if(subRaiz == nullptr){
         subRaiz = new Nodo();
-        subRaiz->datos[0];
+        subRaiz->datos[0] = dato;
         ++subRaiz->numDatos;
         ++numNodos;
-    }else if(valor < subRaiz->nombre){
-        Agregar(valor,subRaiz->menor);
-    }else if(valor > subRaiz->nombre){
-        Agregar(valor,subRaiz->menor);
+        return;
+    }
+    //Si la subraiz es hoja, se agrega un elemento al arreglo, sino, se compara el dato con los datos del nodo.
+    if(subRaiz->EsHoja()){
+        //si hay espacio se agrega un elemento, sino entonces se divide el nodo en 2 y se sube el menor del segundo.
+        if(subRaiz->HayEspacio()){
+            subRaiz->datos[subRaiz->numDatos+1] = dato;
+            ++subRaiz->numDatos;
+        }else{
+            //Agregar empujar
+            //conectar hojas
+            //sumar el numHijos
+        }
+    }else{
+        for(int i = 0 ; i < subRaiz->numDatos ; ++i){
+            if(dato < subRaiz->datos[i]){
+                Agregar(dato,subRaiz->hijos[i]);
+                return;
+            }
+        }
+        Agregar(dato,subRaiz->hijos[subRaiz->numDatos+1]);
     }
 }
 
@@ -82,9 +111,21 @@ void ArbolBPlus::Agregar(int dato,Nodo * &subRaiz)
 //---------------------------------------------------------------------------------------------------------------------------------
 
 
-ArbolBPlus::Nodo::Nodo(Nodo *hijos = nullptr) : numHijos(0), hijos(nullptr),siguienteHoja(nullptr)
+ArbolBPlus::Nodo::Nodo(Nodo *hijos, int orden /**< = 5 */) : numDatos(0), numHijos(0), orden(orden), hijos(nullptr),
+                                                        siguienteHoja(nullptr)
 {
     datos = new int[orden-1];
+}
+
+bool ArbolBPlus::Nodo::HayEspacio()
+{
+
+}
+
+
+bool ArbolBPlus::Nodo::EsHoja()
+{
+
 }
 
 

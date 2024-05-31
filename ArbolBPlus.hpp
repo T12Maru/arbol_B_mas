@@ -1,10 +1,10 @@
-#ifndef ARBOLB+_HPP_INCLUDED
-#define ARBOLB+_HPP_INCLUDED
+#ifndef ARBOLBPLUS_HPP_INCLUDED
+#define ARBOLBPLUS_HPP_INCLUDED
 
 class ArbolBPlus{
 
 public:
-    ArbolBPlus(int grado = 5);
+    ArbolBPlus(int orden = 5);
     ~ArbolBPlus();
     ArbolBPlus(const ArbolBPlus & arbol);
     ArbolBPlus& operator=(const ArbolBPlus &arbol);
@@ -16,6 +16,7 @@ public:
     void Vaciar();
 
     bool Buscar(int dato);
+    bool EstaVacio();
 
 private:
     int numNodos;
@@ -23,12 +24,16 @@ private:
 
     struct Nodo{
         int numDatos;
+        int numHijos;
+        int orden;
         int *datos;//orden-1
-        Nodo *hijos;//orden
+        Nodo* *hijos;//orden
         Nodo *siguienteHoja;
 
-        Nodo(Nodo *hijos = nullptr);
-        bool EsHoja();
+        Nodo(Nodo *hijos = nullptr, int orden = 5);
+        bool EsHoja(); //pendiente
+        bool HayEspacio();
+        bool EstaLleno();
     }*raiz;
 
     void Agregar(int dato,Nodo * &subRaiz);//referencia a puntero a nodo
@@ -37,4 +42,4 @@ private:
 };
 
 
-#endif // ARBOLB+_HPP_INCLUDED
+#endif // ARBOLBPLUS_HPP_INCLUDED
